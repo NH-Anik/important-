@@ -1,0 +1,63 @@
+
+// Function to send verification email
+function sendVerificationEmail({_id,email}) {
+  const currentUrl= "http://localhost:8080/api/v1/auth"
+  const uniqueString = uuidv4() + _id;
+
+  const mailOptions = {
+    from: process.env.AUTH_EMAIL,
+    to: email,
+    subject: 'Email Verification',
+    text: `Please verify your email address to complete the signup and login into your account.
+    <p> This link will be expired in 1 hour.</p> <br> <p>
+    <a href="${currentUrl+" /verify-email" + _id+'/'+uniqueString}">Click here to verify your email</a> to
+    proceed</p>`
+  };
+
+  // hash the unique string
+  const saltRounds = 10;
+  bcrypt.hash(uniqueString, saltRounds)
+    .then((hashedUniqueString) => {
+      const newVerification = new useVerification({
+        userId: _id,
+        uniqueString: hashedUniqueString,
+        createdAt: Date.now(),
+        expiresAt: Date.now() + 3600000
+      });
+      newVerification
+        .save()
+        .then(() => {
+          transporter
+            .sendMail(mailOptions)
+            .then(() => {
+              // email sent and verification link sent
+              res.json({
+                success: true,
+                message: "Email verification link sent to " + email
+              })
+            })
+            .catch((error) => {
+              console.log(error);
+              res.json({
+                success: false,
+                message: "Error sending email verification link",
+              })
+            })
+        })
+
+        .catch((error) => {
+          console.log(error);
+          res.json({
+            success: false,
+            message: "Error hashing unique string",
+          })
+        })
+    })
+    .catch(() => {
+     res.json({
+        success: false,
+        message: "Error hashing unique string",
+      });    
+    })
+
+}
