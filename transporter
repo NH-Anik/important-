@@ -1,0 +1,21 @@
+// nodemailer stuff
+let transporter = nodemailer.createTransport({
+  // service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.AUTH_EMAIL, 
+    pass: process.env.AUTH_PASS
+  },
+});
+// testing success
+transporter.verify((err, success) => {
+  if (err) {
+    console.log(err);
+  }else{
+    console.log("Ready for messages");
+    console.log(success);
+  }
+})
+     
