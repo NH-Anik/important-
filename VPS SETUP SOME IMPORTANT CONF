@@ -1,0 +1,253 @@
+#sudo apt update
+#sudo apt upgrade
+
+#curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+#nvm i --lts
+#npm i -g pnpm
+#pnpm i
+
+Check Your Ubuntu Version: 
+#lsb_release -a
+
+                                                               @ MongoDB setup @
+@ mongodb install frist flow link @
+Link:https://www.mongodb.com/docs/v7.0/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu
+check mongodb details 
+#sudo systemctl status mongod
+
+mongo db start in ubantu
+#sudo systemctl start mongod
+
+mongodb enable importent not work database 
+#sudo systemctl enable mongod
+
+vps information 
+#lsb_release -a
+
+                                                                ## github install ##
+vps in install github
+#sudo apt install git
+
+git privet property access 
+#sudo apt install gh
+
+vps in login github
+#gh auth login
+
+github veryfi code
+pass:8080-EF0F
+
+@ git clone link @
+#git clone https://github.com/"example"
+
+                                           @ Backend system management @
+@ server in npm install @
+#npm i -g pnpm
+
+than install 
+#pnpm i
+
+@ new file create need nano @
+#nano .env
+
+@ show data in .env @
+#cat .env
+
+@ all-time on for server needed @
+#npm i -g pm2
+
+@ server start command
+#pm2 start npm --name "example name of the project name in cotetion" -- start
+
+@ server restart, stop, start you need
+#pm2 restart "example name of the project"
+
+#pm2 start "server name enter"
+
+#pm2 stop "server name enter"
+
+@ server list show @
+#pm2 ls
+
+#ls
+
+@ server name@
+qbcorestore
+
+@ singel server show @
+#pm2 logs qbcorestore
+
+@ check server is running @
+#curl http://localhost:8080
+
+                                                                  ### frontend work start ###
+@ All-packages install @
+#pnpm i
+#cd 
+
+@ Project build @
+#pnpm build
+
+@ Run project @
+#pnpm preview --host
+
+
+                                                                  @ firewall setup in VPS @
+#sudo ufw enable
+#sudo ufw status
+#sudo ufw allow ssh
+#sudo ufw allow https
+
+###sudo ufw reset
+
+
+@ activ @
+#sudo ufw allow 4173
+#sudo ufw allow 'Nginx HTTP'
+#sudo ufw allow 8433:8443/tcp
+#sudo ufw allow 22/tcp
+#sudo ufw allow 80/tcp
+#sudo ufw allow 'Nginx Full'
+
+@ Deactiv @
+#sudo ufw deny 4173
+
+@ Delete @
+#sudo ufw delete 'Nginx HTTP'
+#sudo ufw reload
+
+
+                                                                    @@ install nginx @@
+#sudo apt install nginx
+
+#sudo systemctl status nginx
+
+#sudo systemctl start nginx
+
+#sudo systemctl stop nginx
+
+#sudo service nginx restart
+
+@uninstall nginx
+#sudo apt-get remove nginx
+
+@ in nginx
+#cd /etc/nginx
+
+#cd sites-enabled/
+
+#cd sites-available/
+
+@creat .conf file
+#nano 62.72.1.243.conf
+#cat 62.72.1.243.conf
+
+#cd sites-enabled/
+#rm default.conf
+
+server{
+  listen 80;
+  root /root/qbcorestore/client/dist;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}
+
+check parpes
+#sudo nginx -t
+
+go to
+#cd sites-enabled/
+
+simbolic link 
+#ln -s ../sites-available/62.72.1.243.conf
+
+in nginx some change than
+#systemctl restart nginx 
+
+#sudo service nginx restart
+
+#cp 62.72.1.243.conf qbcore-store.com.conf
+
+#cat qbcore-store.com.conf
+
+#nano qbcore-store.com.conf
+
+qbcore-store.com
+
+server {
+  listen 80;
+  
+  location / {
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+    try_files $uri $uri/ /index.html =404;
+  }
+  
+  include /etc/nginx/extra-conf.d/*.conf;
+}
+
+ server {
+    listen 80;
+    server_name qbcore-store.com www.qbcore-store.com;
+    root /root/QBCore-store-Full-Project/client/dist;
+  
+    location / {
+      try_files $uri $uri/ =404;
+    }
+  }
+
+
+#ln -s ../sites-available/qbcore-store.com.conf
+
+
+
+
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /root/QBCore-store-Full-Project/client/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+
+
+                                                             @@ active status check @@
+#sudo netstat -tulnp | grep LISTEN
+#ssh-keygen -r 62.72.1.243
+
+#ssh-keygen -r 62.72.1.243
+
+@ vps problem solve @
+#sudo apt list -- installed
+
+#sudo apt list -- installed | grep openssh-server
+#ip addr
+
+#sudo service ssh status
+
+#sudo apt install openssh-server
+#nano qbcore-store
+
+server {
+  listen 80;
+
+  location / {
+        root /var/www/qbcore-store;
+        index  index.html index.htm;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        try_files $uri $uri/ /index.html;
+  }
+}
+
+#ln -s ../sites-available/qbcore-store.conf
