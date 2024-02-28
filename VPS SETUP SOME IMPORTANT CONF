@@ -224,7 +224,8 @@ server {
 
 #ssh-keygen -r 62.72.1.243
 
-@ vps problem solve @
+                                                              @ vps problem solve @
+
 #sudo apt list -- installed
 
 #sudo apt list -- installed | grep openssh-server
@@ -251,3 +252,36 @@ server {
 }
 
 #ln -s ../sites-available/qbcore-store.conf
+
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    root /var/www/62.72.1.243;
+    index index.html;
+
+}
+                                                         @@ ssl certification set up @@
+
+sudo apt-get install certbot python3-certbot-nginx
+
+sudo certbot --nginx -v
+
+sudo certbot --nginx -d qbcore-store.com -d www.qbcore-store.com
+
+sudo certbot --nginx -d api.qbcore-store.com -d www.api.qbcore-store.com
+
+
+                                                           @most importent line@
+##mone rakte hobe ssl certificat add korar pore http er songe https add korte hobe na hole kono kichu kaj korbe na 
+
+#mongosh
+use mydatabase
+
+mongosh                  // Start mongosh shell
+use mydatabase          // Create or switch to the 'mydatabase' database
+show dbs 
+show collections
+
+
